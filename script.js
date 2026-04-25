@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const tabletObj = document.createElement('div');
     tabletObj.className = 'tablet-object';
     
-    const totalLayers = 20; 
-    const depthSpacing = 3; 
-    const edgeThickness = 4;
+    const totalLayers = 40; 
+    const depthSpacing = 1.6; 
+    const edgeThickness = 6;
     
     for (let i = 0; i < totalLayers; i++) {
       const layer = document.createElement('div');
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       
       // Dynamic lighting for side edges
       if (i > 0 && i < totalLayers - 1) {
-         layer.style.filter = "brightness(0.3)";
+         layer.style.filter = "brightness(0.35) drop-shadow(0 0 2px black)";
       }
       
       // Inject the engraved texture and logo perfectly flush on the outer faces
@@ -113,23 +113,23 @@ document.addEventListener("DOMContentLoaded", () => {
     pixelContainer.className = 'pixel-grid';
     heroSection.appendChild(pixelContainer);
 
-    // Create a grid of pixel blocks covering the full hero
-    const cols = 24;
-    const rows = 12;
+    // Create a grid of pixel blocks at the bottom
+    const cols = 18;
+    const rows = 6;
     const pixels = [];
 
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         const pixel = document.createElement('div');
         pixel.className = 'pixel-block';
-        // Light green gradient: lighter top-right, slightly darker bottom-left
-        const normX = c / (cols - 1);
-        const normY = 1 - r / (rows - 1);
+        // Gradient: light green top-right, dark green bottom-left
+        const normX = c / (cols - 1);          // 0 left → 1 right
+        const normY = 1 - r / (rows - 1);     // 1 top → 0 bottom
         const factor = (normX + normY) / 2;
         
-        const red = Math.floor(160 + factor * 60);   // 160-220
-        const green = Math.floor(190 + factor * 45);  // 190-235
-        const blue = Math.floor(120 + factor * 60);   // 120-180
+        const red = Math.floor(50 + factor * 100);
+        const green = Math.floor(70 + factor * 90);
+        const blue = Math.floor(30 + factor * 70);
         pixel.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
         pixel.style.opacity = '0';
         pixel.style.transform = 'scale(0)';
