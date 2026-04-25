@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const tabletObj = document.createElement('div');
     tabletObj.className = 'tablet-object';
     
-    const totalLayers = 40; 
-    const depthSpacing = 1.6; 
-    const edgeThickness = 6;
+    const totalLayers = 20; 
+    const depthSpacing = 3; 
+    const edgeThickness = 4;
     
     for (let i = 0; i < totalLayers; i++) {
       const layer = document.createElement('div');
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
       
       // Dynamic lighting for side edges
       if (i > 0 && i < totalLayers - 1) {
-         layer.style.filter = "brightness(0.35) drop-shadow(0 0 2px black)";
+         layer.style.filter = "brightness(0.3)";
       }
       
       // Inject the engraved texture and logo perfectly flush on the outer faces
@@ -96,15 +96,15 @@ document.addEventListener("DOMContentLoaded", () => {
   tl.to(".splash-box-group", { scale: 12, duration: 0.8, ease: "power2.in" })
     .to(".splash-screen", { opacity: 0, duration: 0.2 }, "-=0.1");
 
-  // step 6: hero section items appear — everything fires fast and overlapped
+  // step 6: hero section items appear — tablet fires at the same time as the hero fade-in
   tl.fromTo(".hero-section", { opacity: 0 }, { opacity: 1, duration: 0.4 }, "-=0.2")
-    .from(".navbar", { y: -20, opacity: 0, duration: 0.5, ease: "power2.out" }, "-=0.2")
-    .from(".hero-title", { y: 40, opacity: 0, duration: 0.6, ease: "power3.out" }, "-=0.4")
-    .from(".hero-divider", { scaleX: 0, opacity: 0, duration: 0.4, ease: "power2.out" }, "-=0.3")
-    .from(".hero-subbar", { opacity: 0, y: 10, duration: 0.4 }, "-=0.3")
-    .from(".hero-tagline", { opacity: 0, y: 10, duration: 0.4 }, "-=0.3")
-    .from(".bottom-left", { x: -30, opacity: 0, duration: 0.5 }, "-=0.3")
-    .from(".tablet-scene", { y: 200, duration: 0.8, ease: "power3.out" }, "-=0.6");
+    .from(".tablet-scene", { y: 150, duration: 0.6, ease: "power3.out" }, "<")
+    .from(".navbar", { y: -20, opacity: 0, duration: 0.5, ease: "power2.out" }, "<0.1")
+    .from(".hero-title", { y: 40, opacity: 0, duration: 0.6, ease: "power3.out" }, "<0.1")
+    .from(".hero-divider", { scaleX: 0, opacity: 0, duration: 0.4, ease: "power2.out" }, "<0.1")
+    .from(".hero-subbar", { opacity: 0, y: 10, duration: 0.4 }, "<0.1")
+    .from(".hero-tagline", { opacity: 0, y: 10, duration: 0.4 }, "<0.1")
+    .from(".bottom-left", { x: -30, opacity: 0, duration: 0.5 }, "<0.1");
 
   // --- Decorative Pixel Blocks at Bottom of Hero ---
   const heroSection = document.querySelector('.hero-section');
@@ -113,23 +113,23 @@ document.addEventListener("DOMContentLoaded", () => {
     pixelContainer.className = 'pixel-grid';
     heroSection.appendChild(pixelContainer);
 
-    // Create a grid of pixel blocks at the bottom
-    const cols = 18;
-    const rows = 6;
+    // Create a grid of pixel blocks covering the full hero
+    const cols = 24;
+    const rows = 12;
     const pixels = [];
 
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         const pixel = document.createElement('div');
         pixel.className = 'pixel-block';
-        // Gradient: light green top-right, dark green bottom-left
-        const normX = c / (cols - 1);          // 0 left → 1 right
-        const normY = 1 - r / (rows - 1);     // 1 top → 0 bottom
+        // Light green gradient: lighter top-right, slightly darker bottom-left
+        const normX = c / (cols - 1);
+        const normY = 1 - r / (rows - 1);
         const factor = (normX + normY) / 2;
         
-        const red = Math.floor(50 + factor * 100);
-        const green = Math.floor(70 + factor * 90);
-        const blue = Math.floor(30 + factor * 70);
+        const red = Math.floor(160 + factor * 60);   // 160-220
+        const green = Math.floor(190 + factor * 45);  // 190-235
+        const blue = Math.floor(120 + factor * 60);   // 120-180
         pixel.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
         pixel.style.opacity = '0';
         pixel.style.transform = 'scale(0)';
